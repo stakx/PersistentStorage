@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.3</TargetFramework>
+    <Version>0.1.0</Version>
+    <PackageId>stakx.PersistentStorage</PackageId>
+    <Authors>stakx</Authors>
+    <Company />
+    <Description>A simple, file system-based content addressable storage (CAS).</Description>
+    <Copyright>Copyright © 2017 stakx</Copyright>
+    <PackageProjectUrl>https://github.com/stakx/PersistentStorage</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/stakx/PersistentStorage.git</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <PackageTags>content-addressable-storage file-system file-management blob sha1</PackageTags>
+    <AssemblyVersion>0.0.0.0</AssemblyVersion>
+    <FileVersion>0.0.0.0</FileVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.IO.FileSystem" Version="4.3.0" />
+    <PackageReference Include="System.Security.Cryptography.Algorithms" Version="4.3.0" />
+  </ItemGroup>
+
+</Project>
