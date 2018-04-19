@@ -39,4 +39,4 @@ using (var contentReader = new StreamReader(content))
 ## Similar prior art ##
 
  * [Git's object data store](https://git-scm.com/book/en/v2/Git-Internals-Git-Objects)
- * [drewnoakes/cassette](https://github.com/drewnoakes/cassette)
+ * [point-platform/cassette](https://github.com/point-platform/cassette)
