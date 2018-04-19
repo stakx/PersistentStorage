@@ -4,9 +4,11 @@
 #endregion
 
 using System;
+using System.Runtime.Serialization;
 
 namespace PersistentStorage
 {
+    [Serializable]
     public sealed class FileSystemBasedPersistentStorageException : Exception
     {
         internal FileSystemBasedPersistentStorageException(string message)
@@ -16,6 +18,11 @@ namespace PersistentStorage
 
         internal FileSystemBasedPersistentStorageException(string message, Exception innerException)
             : base(message, innerException)
+        {
+        }
+
+        private FileSystemBasedPersistentStorageException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
         {
         }
     }
