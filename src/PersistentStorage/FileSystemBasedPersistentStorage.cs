@@ -46,30 +46,33 @@ namespace PersistentStorage
             {
                 PersistentStorageItemId id;
 
+                using (var sha = SHA1.Create())
                 using (var temporaryFile = File.Open(temporaryFilePath, FileMode.Create, FileAccess.Write, FileShare.None))
+                using (var cryptoStream = new CryptoStream(temporaryFile, sha, CryptoStreamMode.Write))
                 {
                     try
                     {
-                        await writeContentAsync(temporaryFile);
+                        await writeContentAsync(cryptoStream);
+
+                        await cryptoStream.FlushAsync();
+                        if (!cryptoStream.HasFlushedFinalBlock)
+                        {
+                            cryptoStream.FlushFinalBlock();
+                        }
                     }
                     catch (Exception ex)
                     {
                         throw new FileSystemBasedPersistentStorageException("Could not write item content.", ex);
                     }
-                }
 
-                try
-                {
-                    using (var sha = SHA1.Create())
-                    using (var temporaryFile = File.Open(temporaryFilePath, FileMode.Open, FileAccess.Read, FileShare.None))
+                    try
                     {
-                        var hash = sha.ComputeHash(temporaryFile);
-                        id = new PersistentStorageItemId(hash);
+                        id = new PersistentStorageItemId(sha.Hash);
                     }
-                }
-                catch (Exception ex)
-                {
-                    throw new FileSystemBasedPersistentStorageException("Could not compute identity from item content.", ex);
+                    catch (Exception ex)
+                    {
+                        throw new FileSystemBasedPersistentStorageException("Could not compute identity from item content.", ex);
+                    }
                 }
 
                 var contentFilePath = this.GetItemContentFilePath(id);
