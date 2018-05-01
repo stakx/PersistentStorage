@@ -6,8 +6,11 @@ using System.Runtime.Serialization;
 
 namespace PersistentStorage
 {
+    /// <summary>
+    ///   The type of <see cref="PersistentStorageException"/> that a <see cref="FileSystemBasedPersistentStorage"/> instance may throw.
+    /// </summary>
     [Serializable]
-    public sealed class FileSystemBasedPersistentStorageException : Exception
+    public sealed class FileSystemBasedPersistentStorageException : PersistentStorageException
     {
         internal FileSystemBasedPersistentStorageException(string message)
             : base(message)
