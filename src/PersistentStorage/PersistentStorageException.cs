@@ -7,19 +7,19 @@ using System.Runtime.Serialization;
 namespace PersistentStorage
 {
     [Serializable]
-    public sealed class FileSystemBasedPersistentStorageException : PersistentStorageException
+    public abstract class PersistentStorageException : Exception
     {
-        internal FileSystemBasedPersistentStorageException(string message)
+        protected PersistentStorageException(string message)
             : base(message)
         {
         }
 
-        internal FileSystemBasedPersistentStorageException(string message, Exception innerException)
+        protected PersistentStorageException(string message, Exception innerException)
             : base(message, innerException)
         {
         }
 
-        private FileSystemBasedPersistentStorageException(SerializationInfo info, StreamingContext context)
+        protected PersistentStorageException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
         }
