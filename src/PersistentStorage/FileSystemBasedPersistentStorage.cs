@@ -8,10 +8,26 @@ using System.Threading.Tasks;
 
 namespace PersistentStorage
 {
+    /// <summary>
+    ///   A type of <see cref="IPersistentStorage"/> that persists its items using the file system.
+    ///   All items will be stored as files somewhere inside a specified root directory.
+    /// </summary>
     public sealed partial class FileSystemBasedPersistentStorage : IPersistentStorage
     {
         private string path;
 
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="FileSystemBasedPersistentStorage"/> class using the specified root directory.
+        /// </summary>
+        /// <param name="path">
+        ///   Absolute or relative path of the root directory inside of which items will be stored.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        ///   <paramref name="path"/> is <see langword="null"/>.
+        /// </exception>
+        /// <exception cref="DirectoryNotFoundException">
+        ///   The directory specified by <paramref name="path"/> does not exist.
+        /// </exception>
         public FileSystemBasedPersistentStorage(string path)
         {
             if (path == null)
@@ -32,6 +48,13 @@ namespace PersistentStorage
             this.path = path;
         }
 
+        /// <inheritdoc/>
+        /// <exception cref="ArgumentNullException">
+        ///   <paramref name="writeContentAsync"/> is <see langword="null"/>.
+        /// </exception>
+        /// <exception cref="FileSystemBasedPersistentStorageException">
+        ///   The item could not be created, or the item's ID could not be computed from the specified content.
+        /// </exception>
         public async Task<IPersistentStorageItem> CreateOrGetItemAsync(Func<Stream, Task> writeContentAsync)
         {
             if (writeContentAsync == null)
@@ -107,6 +130,10 @@ namespace PersistentStorage
             }
         }
 
+        /// <inheritdoc/>
+        /// <exception cref="FileSystemBasedPersistentStorageException">
+        ///   The item with the specified ID does not exist in this storage.
+        /// </exception>
         public Task<IPersistentStorageItem> GetItemAsync(PersistentStorageItemId id)
         {
             if (this.HasItem(id))
@@ -119,6 +146,7 @@ namespace PersistentStorage
             }
         }
 
+        /// <inheritdoc/>
         public bool HasItem(PersistentStorageItemId id)
         {
             return File.Exists(this.GetItemContentFilePath(id));
