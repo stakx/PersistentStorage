@@ -1,7 +1,5 @@
-﻿#region Copyright
-// Copyright (c) 2017 stakx
+﻿// Copyright (c) 2017 stakx
 // License available at https://github.com/stakx/PersistentStorage/blob/develop/LICENSE.md.
-#endregion
 
 using System.Diagnostics;
 using System.IO;
